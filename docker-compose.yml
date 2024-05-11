@@ -18,46 +18,46 @@ services:
       - PORT=3000
       - NATS_SERVERS=nats://nats-server:4222
   
-  # products-ms:
-  #   build: ./products-ms
-  #   ports:
-  #     - "3002:3002"
-  #   volumes:
-  #     - ./products-ms/src:/usr/src/app/src
-  #   command: npm run start:dev
-  #   environment:
-  #     - PORT=3002
-  #     - NATS_SERVERS=nats://nats-server:4222
-  #     - DATABASE_URL=file:./dev.db
+  products-ms:
+    build: ./products-ms
+    ports:
+      - "3002:3002"
+    volumes:
+      - ./products-ms/src:/usr/src/app/src
+    command: npm run start:dev
+    environment:
+      - PORT=3002
+      - NATS_SERVERS=nats://nats-server:4222
+      - DATABASE_URL=file:./dev.db
   
-  # # Order MS
-  # orders-ms:
-  #   depends_on:
-  #     - order-db
-  #   build: ./orders-ms
-  #   ports:
-  #     - "3003:3003"
-  #   volumes:
-  #     - ./orders-ms/src:/usr/src/app/src
-  #   command: npm run start:dev
-  #   environment:
-  #     - PORT=3003
-  #     - DATABASE_URL=postgresql://postgres:123456@order-database:5432/ordersdb?schema=public
-  #     - NATS_SERVERS=nats://nats-server:4222
+  # Order MS
+  orders-ms:
+    depends_on:
+      - order-db
+    build: ./orders-ms
+    ports:
+      - "3003:3003"
+    volumes:
+      - ./orders-ms/src:/usr/src/app/src
+    command: npm run start:dev
+    environment:
+      - PORT=3003
+      - DATABASE_URL=postgresql://postgres:123456@order-database:5432/ordersdb?schema=public
+      - NATS_SERVERS=nats://nats-server:4222
   
 
-  # order-db:
-  #   container_name: order-database
-  #   image: postgres:16.2
-  #   restart: always
-  #   volumes:
-  #     - ./orders-ms/postgres:/var/lib/postgresql/data
-  #   ports:
-  #     - 5432:5432
-  #   environment:
-  #     - POSTGRES_USER=postgres
-  #     - POSTGRES_PASSWORD=123456
-  #     - POSTGRES_DB=ordersdb
+  order-db:
+    container_name: order-database
+    image: postgres:16.2
+    restart: always
+    volumes:
+      - ./orders-ms/postgres:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=ordersdb
 
 
 
